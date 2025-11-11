@@ -1,0 +1,23 @@
+%% Level 1 DFD — Process 3.0 Manage Requests
+graph LR
+    Student[Student]
+    Admin[Admin]
+    subgraph ManageReq["3.0 Manage Requests"]
+        R31[(3.1\nSubmit Borrowing Request)]
+        R32[(3.2\nValidate Instrument Availability)]
+        R33[(3.3\nApprove / Reject Request)]
+        R34[(3.4\nUpdate Request Records)]
+    end
+    D2[(D2: Instrument Data)]
+    D3[(D3: Request Data)]
+
+    Student -->|Borrowing Request| R31
+    R31 -->|Check Availability| R32
+    R32 -->|Query D2| D2
+    D2 -->|Availability Result| R32
+    R32 -->|Availability Info| R33
+    R33 -->|Admin Approval / Rejection| Admin
+    Admin -->|Decision| R33
+    R33 -->|Result| R34
+    R34 -.->|Update| D3
+    R34 -->|Notify Student| Student

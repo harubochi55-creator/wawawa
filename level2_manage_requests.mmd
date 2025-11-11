@@ -1,0 +1,24 @@
+%% Level 2 DFD — Process 3.0 Manage Requests (detailed)
+graph LR
+    Student[Student]
+    Admin[Admin]
+    subgraph Req2["3.0 Manage Requests — Level 2"]
+        L31[(3.1\nInput Borrowing Form)]
+        L32[(3.2\nCheck Instrument Availability)]
+        L33[(3.3\nSend Request to Admin for Approval)]
+        L34[(3.4\nLog Request Result)]
+        L35[(3.5\nUpdate Request History)]
+    end
+    D2[(D2: Instrument Data)]
+    D3[(D3: Request Data)]
+
+    Student -->|Borrow Form| L31
+    L31 -->|Form Data| L32
+    L32 -->|Query D2| D2
+    D2 -->|Availability| L32
+    L32 -->|Send for Approval| L33
+    L33 -->|Request to Admin| Admin
+    Admin -->|Decision| L34
+    L34 -.->|Update| D3
+    L35 -->|Update History| D3
+    L34 -->|Notify Student| Student

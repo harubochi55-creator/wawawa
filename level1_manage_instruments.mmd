@@ -1,0 +1,25 @@
+%% Level 1 DFD — Process 2.0 Manage Instruments
+graph TB
+    Admin[Admin]
+    subgraph ManageInstr["2.0 Manage Instruments"]
+        I21[(2.1\nAdd New Instrument)]
+        I22[(2.2\nUpdate Instrument Details)]
+        I23[(2.3\nDelete Instrument Record)]
+        I24[(2.4\nView Instrument Information)]
+    end
+    D2[(D2: Instrument Data)]
+
+    Admin -->|"Add"| I21
+    Admin -->|"Update"| I22
+    Admin -->|"Delete"| I23
+    Admin -->|"View"| I24
+
+    I21 -.->|"Write"| D2
+    I22 -.->|"Read/Write"| D2
+    I23 -.->|"Read/Delete"| D2
+    I24 -.->|"Read"| D2
+
+    I21 -->|"Confirmation"| Admin
+    I22 -->|"Confirmation"| Admin
+    I23 -->|"Confirmation"| Admin
+    I24 -->|"Instrument List"| Admin

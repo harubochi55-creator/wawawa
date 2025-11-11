@@ -1,0 +1,24 @@
+%% Level 1 DFD — Process 1.0 Authenticate User
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff3e6', 'primaryBorderColor': '#ffa64d', 'primaryTextColor': '#000', 'lineColor': '#ff9933'}}}%%
+flowchart LR
+    classDef default fill:#fff3e6,stroke:#ffa64d,stroke-width:2px,color:#000;
+    classDef storage fill:#e6f3ff,stroke:#66b3ff,stroke-width:2px,color:#000;
+
+    User(User\nStudent/Admin/Staff)
+    UserDB[(User Authentication\nDatabase)]:::storage
+    
+    subgraph Auth [1.0 Authenticate User]
+        direction TB
+        Login[1.1 Verify Login\nCredentials]
+        Role[1.2 Retrieve User\nAccess Permissions]
+        Access[1.3 Grant System\nAccess Rights]
+    end
+
+    User -->|User Login Credentials| Login
+    Login -->|Database Query| UserDB
+    UserDB -->|Validation Results| Login
+    Login -->|Validated Credentials| Role
+    Role -->|Permission Query| UserDB
+    UserDB -->|Access Level Data| Role
+    Role -->|Permission Info| Access
+    Access -->|System Access Granted| User

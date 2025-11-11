@@ -1,0 +1,15 @@
+%% Level 1 DFD — Process 4.0 Track Instrument Status
+graph TB
+    Staff[Staff]
+    subgraph TrackStat["4.0 Track Instrument Status"]
+        T41[(4.1\nRetrieve Instrument Condition)]
+        T42[(4.2\nUpdate Maintenance Records)]
+        T43[(4.3\nDisplay Real-time Status)]
+    end
+    D4[(D4: Maintenance Data)]
+
+    Staff -->|Instrument Update| T41
+    T41 -->|Condition Info| T43
+    Staff -->|Maintenance Entry| T42
+    T42 -.->|Write / Update| D4
+    T43 -->|Status Dashboard| Staff

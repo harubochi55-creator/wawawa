@@ -1,0 +1,19 @@
+%% Level 1 DFD — Process 5.0 Generate Reports
+graph LR
+    Admin[Admin]
+    subgraph Reports["5.0 Generate Reports"]
+        S51[(5.1\nRetrieve Data from D2,D3,D4)]
+        S52[(5.2\nCompile Report Summaries)]
+        S53[(5.3\nOutput Report)]
+    end
+    D2[(D2: Instrument Data)]
+    D3[(D3: Request Data)]
+    D4[(D4: Maintenance Data)]
+
+    Admin -->|Report Command| S51
+    S51 -->|Retrieve D2| D2
+    S51 -->|Retrieve D3| D3
+    S51 -->|Retrieve D4| D4
+    S51 -->|Data Sets| S52
+    S52 -->|Summary| S53
+    S53 -->|Report Output| Admin

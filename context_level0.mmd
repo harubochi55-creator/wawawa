@@ -1,0 +1,17 @@
+%% Context Diagram (Level 0) — Inventory System for Medical Laboratory Instruments
+graph LR
+    Student[Student]
+    Admin[Admin]
+    Staff[Staff]
+    System["Inventory System for\nMedical Laboratory Instruments (0.0)"]
+
+    Student -->|Borrowing Request| System
+    System -->|Request Status / Availability| Student
+
+    Admin -->|Instrument Records / Maintenance Commands| System
+    System -->|Reports / Confirmation Messages| Admin
+
+    Staff -->|Maintenance Updates| System
+    System -->|Status Reports| Staff
+
+    style System fill:#b7f0b7,stroke:#333,stroke-width:1px

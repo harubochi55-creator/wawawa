@@ -1,0 +1,41 @@
+%% Level 0 DFD — Main System Processes (expand 0.0)
+graph TB
+    Student[Student]
+    Admin[Admin]
+    Staff[Staff]
+
+    subgraph System0["0.0 Inventory System for Medical Laboratory Instruments"]
+        P1[(1.0\nAuthenticate User)]
+        P2[(2.0\nManage Instruments)]
+        P3[(3.0\nManage Requests)]
+        P4[(4.0\nTrack Instrument Status)]
+        P5[(5.0\nGenerate Reports)]
+    end
+
+    D1[(D1: User Data)]
+    D2[(D2: Instrument Data)]
+    D3[(D3: Request Data)]
+    D4[(D4: Maintenance Data)]
+
+    Student -->|Login / Borrowing Request| P1
+    P1 -->|Access Granted| Student
+
+    Admin -->|Manage Instruments| P2
+    P2 -->|Confirmation| Admin
+
+    Student -->|Requests| P3
+    P3 -->|Request Status| Student
+
+    Staff -->|Status Updates| P4
+    P4 -->|Status Reports| Staff
+
+    Admin -->|Run Reports| P5
+    P5 -->|Reports| Admin
+
+    P1 -.->|read/write| D1
+    P2 -.->|read/write| D2
+    P3 -.->|read/write| D3
+    P4 -.->|read/write| D4
+    P5 -.->|read| D2
+    P5 -.->|read| D3
+    P5 -.->|read| D4

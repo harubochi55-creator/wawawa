@@ -1,0 +1,20 @@
+%% Level 3 DFD — Process 4.0 Track Instrument Status (detailed)
+graph TB
+    Staff[Staff]
+    subgraph Track3["4.0 Track Instrument Status — Level 3"]
+        M41[(4.1\nRecord Maintenance Activity)]
+        M42[(4.2\nUpdate Instrument Condition in D2)]
+        M43[(4.3\nGenerate Maintenance Alerts)]
+        M44[(4.4\nDisplay Updated Status)]
+    end
+    D2[(D2: Instrument Data)]
+    D4[(D4: Maintenance Data)]
+
+    Staff -->|Maintenance Entry| M41
+    M41 -.->|Write| D4
+    M41 -->|Log| M42
+    M42 -.->|Sync/Update| D2
+    M41 -->|Trigger| M43
+    M43 -->|Maintenance Alert| Staff
+    M44 -->|Updated Dashboard| Staff
+    M42 -->|Updated Status| M44

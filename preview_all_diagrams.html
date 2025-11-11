@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventory System — All DFD Diagrams (Mermaid Preview)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;margin:20px}
+    h1,h2{margin-top:1.5rem}
+    .diagram{border:1px solid #e0e0e0;padding:12px;margin-bottom:18px;background:#fff}
+    .file-links{margin-bottom:1rem}
+    .note{color:#666;font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <h1>Inventory System for Medical Laboratory Instruments — All DFD Diagrams</h1>
+  <p class="note">This preview uses the Mermaid CDN. Internet connection required. To export, use VS Code Mermaid preview or mermaid-cli.</p>
+
+  <div class="file-links">
+    <strong>Diagram files:</strong>
+    <ul>
+      <li><a href="context_level0.mmd">context_level0.mmd</a></li>
+      <li><a href="level0_dfd.mmd">level0_dfd.mmd</a></li>
+      <li><a href="level1_authenticate_user.mmd">level1_authenticate_user.mmd</a></li>
+      <li><a href="level1_manage_instruments.mmd">level1_manage_instruments.mmd</a></li>
+      <li><a href="level1_manage_requests.mmd">level1_manage_requests.mmd</a></li>
+      <li><a href="level1_track_instrument_status.mmd">level1_track_instrument_status.mmd</a></li>
+      <li><a href="level1_generate_reports.mmd">level1_generate_reports.mmd</a></li>
+      <li><a href="level2_manage_requests.mmd">level2_manage_requests.mmd</a></li>
+      <li><a href="level3_track_instrument_status.mmd">level3_track_instrument_status.mmd</a></li>
+    </ul>
+  </div>
+
+  <h2>Context Diagram (Level 0)</h2>
+  <div class="diagram mermaid">
+graph TB
+    Student["Student"]
+    Admin["Admin"]
+    Staff["Staff"]
+    System["Inventory System for\nMedical Laboratory Instruments\n(0.0)"]
+
+    Student -->|"Borrowing Request"| System
+    System -->|"Request Status"| Student
+
+    Admin -->|"Instrument Records"| System
+    System -->|"Reports"| Admin
+
+    Staff -->|"Maintenance Updates"| System
+    System -->|"Status Reports"| Staff
+
+    style System stroke:#333,stroke-width:2px
+    style Student stroke-width:2px
+    style Admin stroke-width:2px
+    style Staff stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 0 DFD — Main System Processes</h2>
+  <div class="diagram mermaid">
+graph TB
+    Student["Student"]
+    Admin["Admin"]
+    Staff["Staff"]
+
+    P1["1.0 Authenticate\nUser"]
+    P2["2.0 Manage\nInstruments"]
+    P3["3.0 Manage\nRequests"]
+    P4["4.0 Track\nInstrument Status"]
+    P5["5.0 Generate\nReports"]
+
+    DB1[("D1: User Data")]
+    DB2[("D2: Instrument Data")]
+    DB3[("D3: Request Data")]
+    DB4[("D4: Maintenance Data")]
+
+    Student -->|"Login"| P1
+    P1 -->|"Access"| Student
+
+    Admin -->|"Manage"| P2
+    P2 -->|"Confirm"| Admin
+
+    Student -->|"Request"| P3
+    P3 -->|"Status"| Student
+
+    Staff -->|"Update"| P4
+    P4 -->|"Report"| Staff
+
+    Admin -->|"Run"| P5
+    P5 -->|"Reports"| Admin
+
+    P1 -.->|"read/write"| DB1
+    P2 -.->|"read/write"| DB2
+    P3 -.->|"read/write"| DB3
+    P4 -.->|"read/write"| DB4
+    P5 -.->|"read"| DB2
+    P5 -.->|"read"| DB3
+    P5 -.->|"read"| DB4
+
+    style P1 stroke-width:2px
+    style P2 stroke-width:2px
+    style P3 stroke-width:2px
+    style P4 stroke-width:2px
+    style P5 stroke-width:2px
+    style DB1 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB2 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB3 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB4 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Student stroke-width:2px
+    style Admin stroke-width:2px
+    style Staff stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 1 — 1.0 Authenticate User</h2>
+  <div class="diagram mermaid">
+graph TB
+    User["User (Student/Admin/Staff)"]
+    
+    A11["1.1 Verify Login\nCredentials"]
+    A12["1.2 Retrieve\nUser Role"]
+    A13["1.3 Grant\nAccess"]
+    
+    DB1[("D1: User Data")]
+
+    User -->|"Login"| A11
+    A11 -->|"Query"| DB1
+    DB1 -->|"Result"| A11
+    A11 -->|"Validated"| A12
+    A12 -->|"Get Role"| DB1
+    DB1 -->|"Role"| A12
+    A12 -->|"Info"| A13
+    A13 -->|"Access"| User
+
+    style A11 stroke-width:2px
+    style A12 stroke-width:2px
+    style A13 stroke-width:2px
+    style DB1 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style User stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 1 — 2.0 Manage Instruments</h2>
+  <div class="diagram mermaid">
+graph TB
+    Admin["Admin"]
+    
+    I21["2.1 Add New\nInstrument"]
+    I22["2.2 Update\nInstrument Details"]
+    I23["2.3 Delete\nInstrument Record"]
+    I24["2.4 View\nInstrument Info"]
+    
+    DB2[("D2: Instrument Data")]
+
+    Admin -->|"Add"| I21
+    Admin -->|"Update"| I22
+    Admin -->|"Delete"| I23
+    Admin -->|"View"| I24
+
+    I21 -.->|"Write"| DB2
+    I22 -.->|"Read/Write"| DB2
+    I23 -.->|"Delete"| DB2
+    I24 -.->|"Read"| DB2
+
+    I21 -->|"Confirm"| Admin
+    I22 -->|"Confirm"| Admin
+    I23 -->|"Confirm"| Admin
+    I24 -->|"Details"| Admin
+
+    style I21 stroke-width:2px
+    style I22 stroke-width:2px
+    style I23 stroke-width:2px
+    style I24 stroke-width:2px
+    style DB2 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Admin stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 1 — 3.0 Manage Requests</h2>
+  <div class="diagram mermaid">
+graph TB
+    Student["Student"]
+    Admin["Admin"]
+    
+    R31["3.1 Submit\nBorrowing Request"]
+    R32["3.2 Validate\nInstrument Availability"]
+    R33["3.3 Approve or\nReject Request"]
+    R34["3.4 Update\nRequest Records"]
+    
+    DB2[("D2: Instrument Data")]
+    DB3[("D3: Request Data")]
+
+    Student -->|"Request"| R31
+    R31 --> R32
+    R32 -->|"Query"| DB2
+    DB2 -->|"Result"| R32
+    R32 --> R33
+    Admin -->|"Decision"| R33
+    R33 --> R34
+    R34 -->|"Update"| DB3
+    R34 -->|"Notify"| Student
+
+    style R31 stroke-width:2px
+    style R32 stroke-width:2px
+    style R33 stroke-width:2px
+    style R34 stroke-width:2px
+    style DB2 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB3 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Student stroke-width:2px
+    style Admin stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 1 — 4.0 Track Instrument Status</h2>
+  <div class="diagram mermaid">
+graph TB
+    Staff["Staff"]
+    
+    T41["4.1 Retrieve\nInstrument Condition"]
+    T42["4.2 Update\nMaintenance Records"]
+    T43["4.3 Display\nReal-time Status"]
+    
+    DB4[("D4: Maintenance Data")]
+
+    Staff -->|"Update"| T41
+    T41 -->|"Info"| T43
+    Staff -->|"Entry"| T42
+    T42 -.->|"Write"| DB4
+    T43 -->|"Status"| Staff
+
+    style T41 stroke-width:2px
+    style T42 stroke-width:2px
+    style T43 stroke-width:2px
+    style DB4 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Staff stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 1 — 5.0 Generate Reports</h2>
+  <div class="diagram mermaid">
+graph TB
+    Admin["Admin"]
+    
+    S51["5.1 Retrieve Data\nfrom Stores"]
+    S52["5.2 Compile\nReport Summaries"]
+    S53["5.3 Output\nReport"]
+    
+    DB2[("D2: Instrument Data")]
+    DB3[("D3: Request Data")]
+    DB4[("D4: Maintenance Data")]
+
+    Admin -->|"Command"| S51
+    S51 -->|"Read"| DB2
+    S51 -->|"Read"| DB3
+    S51 -->|"Read"| DB4
+    S51 --> S52
+    S52 --> S53
+    S53 -->|"Report"| Admin
+
+    style S51 stroke-width:2px
+    style S52 stroke-width:2px
+    style S53 stroke-width:2px
+    style DB2 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB3 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB4 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Admin stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 2 — 3.0 Manage Requests (detailed)</h2>
+  <div class="diagram mermaid">
+graph TB
+    Student[Student]
+    Admin[Admin]
+    
+    L31["3.1 Submit Borrowing\nRequest"]
+    L32["3.2 Validate Instrument\nAvailability"]
+    L33["3.3 Approve or Reject\nRequest"]
+    L34["3.4 Update Request"]
+    
+    DB2[("D2: Instrument\nData")]
+    DB3[("D3: Request Data")]
+
+    Student -->|"Borrowing Request"| L31
+    L31 --> L32
+    L32 -->|"Query"| DB2
+    DB2 -->|"Availability"| L32
+    L32 --> L33
+    Admin -->|"Approval /"| L33
+    L33 --> L34
+    L34 -->|"Update"| DB3
+    L34 -->|"Notify"| Student
+
+    style L31 stroke-width:2px
+    style L32 stroke-width:2px
+    style L33 stroke-width:2px
+    style L34 stroke-width:2px
+    style DB2 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB3 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Student stroke-width:2px
+    style Admin stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <h2>Level 3 — 4.0 Track Instrument Status (detailed)</h2>
+  <div class="diagram mermaid">
+graph TB
+    Staff["Staff"]
+    
+    M41["4.1 Record\nMaintenance Activity"]
+    M42["4.2 Update Instrument\nCondition"]
+    M43["4.3 Generate\nMaintenance Alerts"]
+    M44["4.4 Display\nUpdated Status"]
+    
+    DB2[("D2: Instrument Data")]
+    DB4[("D4: Maintenance Data")]
+
+    Staff -->|"Entry"| M41
+    M41 -.->|"Write"| DB4
+    M41 -->|"Log"| M42
+    M42 -.->|"Update"| DB2
+    M41 -->|"Alert"| M43
+    M43 -->|"Notify"| Staff
+    M44 -->|"Status"| Staff
+    M42 -->|"Update"| M44
+
+    style M41 stroke-width:2px
+    style M42 stroke-width:2px
+    style M43 stroke-width:2px
+    style M44 stroke-width:2px
+    style DB2 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style DB4 fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style Staff stroke-width:2px
+    linkStyle default stroke-width:1px,fill:none,stroke:gray
+  </div>
+
+  <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+graph TD
+    Start["4.1 Activity Recording"] -->|"Maintenance Data"| P1["<b>4.2.1</b><br/>Data Retrieval"]
+    
+    D4[("D4: Maintenance Logs<br/>(Left Side)")]
+    D2[("D2: Equipment Repository<br/>(Right Side)")]
+    
+    P1 -->|"Record Query"| D4
+    D4 -->|"Maintenance Records"| P1
+    P1 -->|"Retrieved Data"| P2["<b>4.2.2</b><br/>Data Validation"]
+    
+    P2 -->|"Validated Information"| P3["<b>4.2.3</b><br/>Repository Update"]
+    
+    P3 -->|"Condition Update"| D2
+    D2 -->|"Update Status"| P3
+    P3 -->|"Sync Status"| P4["<b>4.2.4</b><br/>Synchronization Confirmation"]
+    
+    P4 -->|"Sync Confirmation"| D4
+    P4 -->|"Completion Status"| End["4.3 Alert Generation"]
+    
+    Note["⚠️ CRITICAL SYNCHRONIZATION<br/>This process ensures bidirectional<br/>data synchronization between<br/>Equipment Repository D2 and<br/>Maintenance Logs D4"]
+    
+    style P1 fill:#e1f5ff,stroke:#0277bd,stroke-width:2px
+    style P2 fill:#e1f5ff,stroke:#0277bd,stroke-width:2px
+    style P3 fill:#e1f5ff,stroke:#0277bd,stroke-width:2px
+    style P4 fill:#e1f5ff,stroke:#0277bd,stroke-width:2px
+    style D4 fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style D2 fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Start fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style End fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Note fill:#fffde7,stroke:#f57f17,stroke-width:2px
